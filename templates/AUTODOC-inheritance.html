@@ -4,6 +4,10 @@ my $input = '[% output_filename( "AUTODOC-inheritance.dot", 1 ) %]';
 
 my $cmd = '[% graphviz_command.join( " " ) %] -Tcmapx '.$input;
 
+print <<"END";
+[% INCLUDE html_header.tt2 %]
+END
+
 open( my $infh, '-|', $cmd );
 while ( <$infh> ) {
     s/&#45;/-/g;
@@ -16,5 +20,8 @@ while ( <$infh> ) {
 close( $infh );
 
 my $png = '[% output_filename( "AUTODOC-inheritance.png" ) %]';
-print qq{<img src="$png" usemap="#inheritance" border="0" />\n};
-[%# $Id: AUTODOC-inheritance.html 13 2007-11-20 13:42:42Z jason $ #%]
+print <<"END";
+<img src="$png" usemap="#inheritance" border="0" />
+[% INCLUDE html_footer.tt2 %]
+END
+[%# $Id: AUTODOC-inheritance.html 16 2007-11-20 19:16:29Z jason $ #%]

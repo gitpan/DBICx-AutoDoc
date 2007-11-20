@@ -3,6 +3,7 @@ abstract: Generate automatic documentation of DBIx::Class::Schema objects
 author: 
   - Jason Kohles, <email@jasonkohles.com>
 build_requires: 
+  ExtUtils::MakeMaker: 6.11
   Test::More: 0
 distribution_type: module
 generated_by: Module::Install version 0.68
@@ -16,7 +17,14 @@ no_index:
     - inc
     - t
 requires: 
+  Carp: 0
+  Class::Accessor::Grouped: 0
+  Class::Inspector: 0
   DBIx::Class: 0
-  File::ShareDir: 0
+  Data::Dump: 0
+  File::Temp: 0
+  FindBin: 0
+  Getopt::Long: 0
+  Pod::Usage: 0
   Template: 0
-version: 0.02
+version: 0.03

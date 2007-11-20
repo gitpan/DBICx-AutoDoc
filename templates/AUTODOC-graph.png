@@ -3,7 +3,7 @@
 [% FILTER collapse %]
     [% graphviz_command.join( ' ' ) %]
     -Tpng
-    -o [% output_filename( 'AUTODOC-graph.png' ) %]
-    [% output_filename( 'AUTODOC-graph.dot' ) %]
+    -o [% output_filename( 'AUTODOC-graph.png', 1 ) %]
+    [% output_filename( 'AUTODOC-graph.dot', 1 ) %]
 [% END %]
 [%# $Id$ #%]

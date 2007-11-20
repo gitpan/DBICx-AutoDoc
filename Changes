@@ -1,5 +1,15 @@
 Revision history for Perl extension DBICx::AutoDoc.
 
+0.03  Tue Nov 20 14:47:01 EST 2007
+    - Added a -I option to dbicx-autodoc, so you can document schemas that
+      aren't in @INC.
+    - Fixed the argument processing for dbicx-autodoc a bit.
+    - Corrected a dumb bug in DBICx::AutoDoc->output_filename that made
+      output always go to the current directory.
+    - Added examples to the distribution, so they will show up on CPAN.
+    - Added documentation to dbicx-autodoc.
+    - Added some missing dependencies to Makefile.PL
+
 0.02  Tue Nov 20 08:32:51 EST 2007
     - Fixed the MANIFEST, first time releasing with Module::Install, and
       the first time I used ShipIt, combined they made me break the release. :)

@@ -3,7 +3,7 @@
 [% FILTER collapse %]
     [% graphviz_command.join( ' ' ) %]
     -Tpng
-    -o [% output_filename( 'AUTODOC-inheritance.png' ) %]
-    [% output_filename( 'AUTODOC-inheritance.dot' ) %]
+    -o [% output_filename( 'AUTODOC-inheritance.png', 1 ) %]
+    [% output_filename( 'AUTODOC-inheritance.dot', 1 ) %]
 [% END %]
 [%# $Id$ #%]

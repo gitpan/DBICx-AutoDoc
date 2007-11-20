@@ -1,5 +1,12 @@
 Changes
 dbicx-autodoc
+examples/ExampleDB-1-graph.dot
+examples/ExampleDB-1-graph.html
+examples/ExampleDB-1-graph.png
+examples/ExampleDB-1-inheritance.dot
+examples/ExampleDB-1-inheritance.html
+examples/ExampleDB-1-inheritance.png
+examples/ExampleDB-1.html
 inc/Module/AutoInstall.pm
 inc/Module/Install.pm
 inc/Module/Install/AutoInstall.pm
@@ -22,6 +29,11 @@ README
 t/01app.t
 t/02pod.t
 t/03podcoverage.t
+t/lib/ExampleDB.pm
+t/lib/ExampleDB/Result/Address.pm
+t/lib/ExampleDB/Result/EmailAddress.pm
+t/lib/ExampleDB/Result/Person.pm
+t/lib/ExampleDB/Result/PhoneNumber.pm
 templates/AUTODOC-dump.txt
 templates/AUTODOC-graph.dot
 templates/AUTODOC-graph.html
@@ -35,5 +47,10 @@ templates/column_name.tt2
 templates/column_type.tt2
 templates/columns_row.tt2
 templates/columns_table.tt2
+templates/html_footer.tt2
+templates/html_header.tt2
+templates/html_tabs.tt2
 templates/relationship_table.tt2
 templates/stylesheet.css
+templates/tabs.tt2
+update-examples

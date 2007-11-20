@@ -1,7 +1,7 @@
 package DBICx::AutoDoc;
 use strict;
 use warnings;
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 use base qw( Class::Accessor::Grouped );
 use Carp qw( croak );
 use Template;
@@ -41,9 +41,11 @@ sub schema {
         if ( $@ ) { croak "Could not load $val: $@" }
     } elsif( my $schema = $self->{ 'schema' } ) {
         if ( ref( $schema ) || ! $self->connect ) { return $schema }
-        return $self->{ 'schema' } = $schema->connect(
+        print "Connecting to database\n";
+        $self->{ 'schema' } = $schema->connect(
             $self->dsn, $self->user, $self->pass,
         );
+        return $self->{ 'schema' };
     } else {
         croak "No schema provided";
     }
@@ -86,9 +88,19 @@ sub sources {
     my @sources = ();
     $self->{ 'sources' } = \@sources;
 
+    my %source_names = ();
+    $self->{ 'source_names' } = \%source_names;
+    
+    # mst: map { $_->source_name }
+    #      grep { $_->result_class eq $class }
+    #      map { $schema->source($_) } $schema->sources
+    # mst: it's all you can have safely :)
     for my $moniker ( sort $schema->sources ) {
+        my $source = $schema->source( $moniker );
         my $rs = $schema->resultset( $moniker );
         my $cl = $rs->result_class;
+
+        $source_names{ $cl } = $source->source_name;
 
         # COLLECTING DATA
         push( @sources, {
@@ -224,6 +236,8 @@ sub relationship_map {
     my ( $self ) = @_;
 
     my @relmap = ();
+    my $snames = $self->{ 'source_names' };
+
     for my $source ( @{ $self->sources } ) {
         for my $rel ( @{ $source->{ 'relationships' } } ) {
             my $type = $rel->{ 'type' };
@@ -240,7 +254,7 @@ sub relationship_map {
             } else {
                 $map->{ 'accessor' } = $rel->{ 'attr' }->{ 'accessor' };
                 $map->{ 'self' } = $source->{ 'moniker' };
-                $map->{ 'foreign' } = $rel->{ 'foreign_class' }->source_name;
+                $map->{ 'foreign' } = $snames->{ $rel->{ 'foreign_class' } };
 
                 my %cond = %{ $rel->{ 'cond' } };
             
@@ -361,9 +375,9 @@ sub output_filename {
     my $base = $self->filename_base;
     $template =~ s/^AUTODOC/$base/;
     if ( $full ) {
-        return $template;
-    } else {
         return File::Spec->catfile( $self->output, $template );
+    } else {
+        return $template;
     }
 }
 
