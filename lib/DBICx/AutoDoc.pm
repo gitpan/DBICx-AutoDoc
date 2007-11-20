@@ -1,7 +1,7 @@
 package DBICx::AutoDoc;
 use strict;
 use warnings;
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 use base qw( Class::Accessor::Grouped );
 use Carp qw( croak );
 use Template;
@@ -664,7 +664,7 @@ or as the C<graphviz_command> option to L<DBICx::AutoDoc>.
 
 =head1 SEE ALSO
 
-L<dbixc-autodoc>, L<DBICx::AutoDoc>, L<DBIx::Class>, L<DBIx::Class::Schema>,
+L<dbicx-autodoc>, L<DBICx::AutoDoc>, L<DBIx::Class>, L<DBIx::Class::Schema>,
 L<Template>
 
 =head1 AUTHOR

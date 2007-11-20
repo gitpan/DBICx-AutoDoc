@@ -37,3 +37,4 @@ digraph dbixclass {
     [% END %]
 [% END %]
 }
+[%# $Id$ #%]

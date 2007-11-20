@@ -6,3 +6,4 @@
     -o [% output_filename( 'AUTODOC-graph.png' ) %]
     [% output_filename( 'AUTODOC-graph.dot' ) %]
 [% END %]
+[%# $Id$ #%]

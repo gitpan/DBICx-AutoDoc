@@ -6,3 +6,4 @@
     -o [% output_filename( 'AUTODOC-inheritance.png' ) %]
     [% output_filename( 'AUTODOC-inheritance.dot' ) %]
 [% END %]
+[%# $Id$ #%]
