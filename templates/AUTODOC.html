@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title>[% schema_class %] version [% schema_version %]</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style type="text/css">[% PROCESS stylesheet.css %]</style>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+<body>
+    <h1><a name="index">[% schema_class %] version [% schema_version %]</a></h1>
+
+    <ul>
+    [% FOR source IN sources %]
+    <li><a href="#[% source.moniker %]">[% source.moniker %]</a></li>
+    [% END %]
+    </ul>
+    <hr />
+
+    [% FOR source IN sources %]
+        <h2>
+            <a name="[% source.moniker %]">[% source.moniker %]</a>
+            (table [% source.table %])
+        </h2>
+
+        [% INCLUDE columns_table.tt2 %]
+        [% IF source.relationships.size %]
+            <br />
+            [% INCLUDE relationship_table.tt2 %]
+        [% END %]
+
+        <hr />
+    [% END %]
+    <p>Generated [% generated %]</p>
+</body>
+</html>

@@ -1,0 +1,6 @@
+Revision history for Perl extension DBICx::AutoDoc.
+
+0.01  Sun Nov 11 19:24:17 2007
+	- original version; created by h2xs 1.23 with options
+		-X DBICx::AutoDoc
+

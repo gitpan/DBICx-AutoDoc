@@ -1,0 +1,58 @@
+#!/usr/local/bin/perl -w
+use strict;
+use warnings;
+use FindBin qw( $Bin );
+use lib "$Bin/lib";
+use Getopt::Long;
+use DBICx::AutoDoc;
+
+my %config = (
+    connect             => 0,
+    schema              => undef,
+    dsn                 => undef,
+    user                => undef,
+    pass                => undef,
+    output              => undef,
+    graphviz_command    => undef,
+    include_path        => undef,
+);
+
+my ( $list, @templates );
+my %options = (
+    'template=s'    => \@templates,
+    'list'          => \$list,
+);
+for my $key ( keys %config ) {
+    my $val = \$config{ $key },
+    $options{ $key.'=s' } = \$config{ $key };
+    if ( $key =~ /_/ ) {
+        my $key2 = $key;
+        $key2 =~ s/_/-/g;
+        $options{ $key2.'=s' } = \$config{ $key };
+    }
+}
+
+GetOptions( %options );
+push( @templates, @ARGV );
+
+for my $key ( keys %config ) {
+    if ( ! defined $config{ $key } ) { delete $config{ $key } }
+}
+for my $x (qw( graphviz_command )) {
+    if ( $config{ $x } ) {
+        $config{ $x } = [ split( ' ', $config{ $x } ) ];
+    }
+}
+
+my $autodoc = DBICx::AutoDoc->new( %config );
+
+if ( $list ) {
+    for ( $autodoc->list_templates ) { print "$_\n" }
+    exit;
+}
+
+if ( @templates ) {
+    $autodoc->fill_templates( @templates );
+} else {
+    $autodoc->fill_all_templates;
+}

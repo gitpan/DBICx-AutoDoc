@@ -1,0 +1,53 @@
+
+body {
+    color:  #000000;
+    background-color: #FFFFFF;
+    font-family: Helvetica, sans-serif;
+}
+
+p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+ol {
+    list-style-type: upper-alpha;
+}
+
+hr {
+    color: #00FF00;
+    background-color: #808080;
+}
+
+table {
+    border-width: medium;
+    padding: 3px;
+    background-color: #000000;
+    margin: 5px;
+}
+
+caption {
+    font-weight : bold;
+    font-size: 14pt;
+}
+
+th {
+    color: #FFFFFF;
+    background-color: #000000;
+    text-align: left;
+}
+
+tr {
+    color: #000000;
+    background-color: #000000;
+    vertical-align: top;
+}
+
+tr.even { background-color: #F0F0F0 }
+tr.odd { background-color: #D8D8D8 }
+td { font-size: 12pt }
+
+div.comment {
+    font-style: italic;
+    padding:    3px;
+}
