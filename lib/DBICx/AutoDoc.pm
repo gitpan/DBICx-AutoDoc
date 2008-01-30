@@ -1,7 +1,7 @@
 package DBICx::AutoDoc;
 use strict;
 use warnings;
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 use base qw( Class::Accessor::Grouped );
 use Carp qw( croak );
 use Template;
@@ -10,6 +10,7 @@ use FindBin qw( );
 use Data::Dump qw( dump );
 use DBICx::AutoDoc::Magic;
 use File::Temp qw( tempfile );
+use Tie::IxHash;
 
 __PACKAGE__->mk_group_accessors( simple => qw(
     output connect dsn user pass
@@ -58,7 +59,7 @@ sub schema_class {
     return ref( $schema ) || $schema;
 }
 
-sub schema_version { shift->schema->VERSION }
+sub schema_version { shift->schema->VERSION || 1 }
 
 sub generated {
     my ( $self ) = @_;
@@ -140,8 +141,6 @@ sub inheritance {
 sub get_columns_for {
     my ( $self, $class ) = @_;
 
-    use Tie::IxHash;
-
     my %cols = ();
     tie( %cols, 'Tie::IxHash' );
 
@@ -173,17 +172,15 @@ sub get_unique_constraints_for {
     my ( $self, $class ) = @_;
 
     # UNIQUE CONSTRAINTS
-    my $unique = {};
+    my %unique = ();
 
     my %tmp = $class->unique_constraints;
     for my $key ( sort keys %tmp ) {
-        $unique->{ $key }->{ 'name' } = $key;
-        my @tmp = @{ $tmp{ $key } };
-
-        $unique->{ $key }->{ 'columns' } = \@tmp;
+        $unique{ $key }->{ 'name' } = $key;
+        $unique{ $key }->{ 'columns' } = $tmp{ $key }
     }
 
-    return $unique;
+    return values %unique;
 }
 
 sub get_relationships_for {
@@ -586,45 +583,132 @@ A sort routine for sorting an array of hashrefs by the 'name' key.
 A class method that calculates and returns the default value for the
 include_path.
 
+=head2 find_template_file
+
+Given the name of a template, returns the full path to the file containing
+that template.
+
+=head2 generated
+
+Returns a timestamp that is used for the 'Generated at' line at the bottom
+of the html output files.
+
+=head2 get_columns_for( $source )
+
+Given a source name, returns the column information for the columns associated
+with that source (as an array of hashrefs.)
+
+=head2 get_relationships_for( $source )
+
+Given a source name, returns the relationship information for the relations
+associated with that source (as an array of hashrefs.)
+
+=head2 get_simple_moniker_for( $source )
+
+Given a source name, this method simply returns a simplified version of the
+name that has runs of non-word characters replaced with an underscore
+(C<s/\W+/_/g>) and has a number appended if two source names would otherwise
+reduce to the same (such as Foo-Bar and Foo::Bar.)  The simplified moniker
+is used in some places where the non-word characters would otherwise cause
+problems (primarily in the GraphViz object names.)
+
+=head2 get_unique_constraints_for( $source )
+
+Given a source name, returns the unique constraints for that source (as an
+array of hashrefs.)
+
+=head2 get_vars
+
+Assembles the output of all the data collection methods into a structure
+suitable for passing to L<Template>.
+
+=head2 inheritance
+
+Returns a structure indicating the inheritance heirarchy of the classes
+used in the schema.
+
+=head2 relationship_map
+
+Assembles the output from the various relationship collecting methods into
+a format more useful for charting and graphing.  Returns an arrayref of
+hashrefs.
+
+=head2 schema_class
+
+Returns the name of the L<DBIx::Class::Schema> subclass.
+
+=head2 schema_version
+
+Returns the version of the L<DBIx::Class::Schema> subclass.  If the package
+doesn't define a version, it is assumed to be version 1.
+
+=head2 software_versions
+
+Returns a hashref of packages and their versions, mostly useful for debugging.
+Includes the versions of L<DBICx::AutoDoc>, L<DBICx::AutoDoc::Magic>,
+L<DBIx::Class>, and L<Template>.
+
+=head2 sources
+
+Returns an arrayref of hashrefs containing information about each source
+defined in the schema.
+
 =head1 TEMPLATES
 
 The templates used by this module are processed with the L<Template> package.
-The template filename is the extension the output file should have, with a
-C<.tt2> extension of it's own.  Only templates in the top level of directories
-in the template search path will be turned into documentation files,
-subcomponents used by the top-level templates can be placed in subdirectories
-without worrying about whether their extensions conflict or not.
+The template filename is the name the output file should have, with the word
+'AUTODOC' in place of the generated name.  Templates found in the
+L</include_path> that start with 'AUTODOC' are assumed to be top-level
+templates, and can be passed to L</fill_template> and will be included in the
+list returned by L</list_templates>.  Templates that do not begin with
+'AUTODOC' are assumed to be supporting templates that will be included by
+top-level templates.
+
+It is important to note that templates beginning with the two characters '#!'
+are treated differently than other templates.  A normal template will be
+processed by L<Template> directly into the appropriate output file.  If the
+template begins with '#!' however, it will be processed into a script file,
+and then run.  The script is expected to produce the appropriate output.  See
+the AUTODOC-graph.png and AUTODOC-inheritance.png templates for examples of
+this.
 
 =head2 INCLUDED TEMPLATES
 
-Templates included with the distribution are:
+Top-level templates included with the distribution are listed below.  Examples
+of the output of the included templates can be found in the distribution's
+examples directory.
 
-=head3 html
-
-Generates an html page that documents each classes table name, column
-information, keys and relationships.
-
-=head3 dot
-
-Generates a .dot file which can be used by L<GraphViz|http://www.graphviz.org/>
-to generate a diagram of the relationships between the classes.  In order to
-get a graphic from the dot file, you need to run one of the graphing commands
-from the GraphViz package (I recommend 'fdp'), something like this:
-
-  fdp -Tpng -o MyApp-DB-Schema-42.png MyApp-DB-Schema-42.dot
-
-=head3 dot_post
-
-This template doesn't actually produce any output itself, instead it runs
-fdp for you to produce .png and .imap files from your .dot source.
-
-=head3 dump
+=head3 AUTODOC-dump.txt
 
 This is a very simple template that just gets the generated data structure
 dumped using L<Data::Dump>.  The output is useful if you are creating your
 own templates, as you can use it to see what data has been collected from
 your schema, but if you are not creating templates then it isn't all that
-valuable.
+valuable.  Note that there is not an example of this output in the
+distributions example directory, as it contains environmental information
+which may be sensitive.
+
+=head3 AUTODOC-graph.dot, AUTODOC-graph.html, AUTODOC-graph.png
+
+These templates are used to produce a GraphViz graph showing the relationships
+between the classes.  The AUTODOC-graph.dot file produces a GraphViz .dot
+file that can be used by command-line utilities such as 'dot' or 'fdp' to
+produce various types of output.  The AUTODOC-graph.png template runs fdp
+to produce a .png output file.  The AUTODOC-graph.html template produces
+an HTML output file which includes a client-side image map, linking various
+parts of the diagram to the main html documentation.
+
+=head3 AUTODOC-inheritance.dot, AUTODOC-inheritance.html, AUTODOC-inheritance.png
+
+Similar to the AUTODOC-graph.* templates, these are used to generate GraphViz
+documentation of the inheritance heirarchy of the classes, rather than the
+relationships of the data.
+
+=head3 AUTODOC.html
+
+This is the main documentation template, that generates an html page which
+documents each classes source name, table name, column information, keys,
+unique constraints  and relationships.
 
 =head1 KNOWN BUGS / LIMITATIONS
 

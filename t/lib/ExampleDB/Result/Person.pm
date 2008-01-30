@@ -1,8 +1,9 @@
-package ExampleDB::Result::Person;
+package # hide from PAUSE
+    ExampleDB::Result::Person;
 use strict;
 use warnings;
-our $VERSION = (qw('$Rev: 16 $'))[1];
-our $ID = '$Id: Person.pm 16 2007-11-20 19:16:29Z jason $';
+our $VERSION = 1;
+our $ID = '$Id: Person.pm 22 2007-11-21 15:17:51Z jason $';
 use base qw( DBIx::Class );
 
 __PACKAGE__->load_components(qw( InflateColumn::DateTime Core ));

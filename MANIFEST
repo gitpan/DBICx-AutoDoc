@@ -52,5 +52,7 @@ templates/html_header.tt2
 templates/html_tabs.tt2
 templates/relationship_table.tt2
 templates/stylesheet.css
+templates/table_comment.tt2
 templates/tabs.tt2
+templates/unique_constraints_table.tt2
 update-examples

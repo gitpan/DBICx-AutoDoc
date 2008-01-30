@@ -138,7 +138,7 @@ div.comment {
         <tr class="even"> <td>person_id </td> <td>integer </td> <td>NOT NULL, FOREIGN KEY </td>
 
     
-        <tr class="odd"> <td>name </td> <td>varchar(64) </td> <td>NOT NULL </td> <tr class="odd"> <td>&nbsp;</td> <td colspan="2"><div class="comment">Home, work, etc</div></td> </tr>
+        <tr class="odd"> <td>name </td> <td>varchar(64) </td> <td>NOT NULL </td> <tr class="odd"> <td>&nbsp;</td> <tdcolspan="2"> <div class="comment">Home, work, etc</div> </td> </tr>
 
     
         <tr class="even"> <td>address1 </td> <td>varchar(128) </td> <td>NOT NULL </td>
@@ -160,6 +160,19 @@ div.comment {
 
 
 
+    
+        <h3 name="Address-unique_constraints">Unique Constraints</h3>
+
+<table cellspacing="0" cellpadding="3">
+    <tr><th width="20%">Name</th><th width="80%">Columns</th> </tr>
+    
+        
+        <tr class="odd"> <td>primary</td> <td>id</td> </tr>
+    
+</table>
+
+
+    
     
         <br />
         
@@ -237,7 +250,7 @@ div.comment {
         <tr class="even"> <td>person_id </td> <td>integer </td> <td>NOT NULL, FOREIGN KEY </td>
 
     
-        <tr class="odd"> <td>name </td> <td>varchar(64) </td> <td>NOT NULL </td> <tr class="odd"> <td>&nbsp;</td> <td colspan="2"><div class="comment">Home, work, etc</div></td> </tr>
+        <tr class="odd"> <td>name </td> <td>varchar(64) </td> <td>NOT NULL </td> <tr class="odd"> <td>&nbsp;</td> <tdcolspan="2"> <div class="comment">Home, work, etc</div> </td> </tr>
 
     
         <tr class="even"> <td>email </td> <td>varchar(128) </td> <td>NOT NULL </td>
@@ -247,6 +260,19 @@ div.comment {
 
 
 
+    
+        <h3 name="EmailAddress-unique_constraints">Unique Constraints</h3>
+
+<table cellspacing="0" cellpadding="3">
+    <tr><th width="20%">Name</th><th width="80%">Columns</th> </tr>
+    
+        
+        <tr class="odd"> <td>primary</td> <td>id</td> </tr>
+    
+</table>
+
+
+    
     
         <br />
         
@@ -334,6 +360,22 @@ div.comment {
 
 
 
+    
+        <h3 name="Person-unique_constraints">Unique Constraints</h3>
+
+<table cellspacing="0" cellpadding="3">
+    <tr><th width="20%">Name</th><th width="80%">Columns</th> </tr>
+    
+        
+        <tr class="odd"> <td>primary</td> <td>id</td> </tr>
+    
+        
+        <tr class="even"> <td>people_username</td> <td>username</td> </tr>
+    
+</table>
+
+
+    
     
         <br />
         
@@ -441,7 +483,7 @@ div.comment {
         <tr class="even"> <td>person_id </td> <td>integer </td> <td>NOT NULL, FOREIGN KEY </td>
 
     
-        <tr class="odd"> <td>name </td> <td>varchar(64) </td> <td>NOT NULL </td> <tr class="odd"> <td>&nbsp;</td> <td colspan="2"><div class="comment">Home, work, etc</div></td> </tr>
+        <tr class="odd"> <td>name </td> <td>varchar(64) </td> <td>NOT NULL </td> <tr class="odd"> <td>&nbsp;</td> <tdcolspan="2"> <div class="comment">Home, work, etc</div> </td> </tr>
 
     
         <tr class="even"> <td>phone_number </td> <td>varchar(32) </td> <td>NOT NULL </td>
@@ -451,6 +493,19 @@ div.comment {
 
 
 
+    
+        <h3 name="PhoneNumber-unique_constraints">Unique Constraints</h3>
+
+<table cellspacing="0" cellpadding="3">
+    <tr><th width="20%">Name</th><th width="80%">Columns</th> </tr>
+    
+        
+        <tr class="odd"> <td>primary</td> <td>id</td> </tr>
+    
+</table>
+
+
+    
     
         <br />
         
@@ -508,5 +563,17 @@ div.comment {
     
 
     <hr />
+
+
+
+
+    <p>
+        Generated Wed Nov 21 10:14:48 2007
+        by <a href="http://www.jasonkohles.com/projects/DBICx-AutoDoc/">DBICx::AutoDoc</a>
+        version 0.03
+    </p>
+</body>
+</html>
+
 
 

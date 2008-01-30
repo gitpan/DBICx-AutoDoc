@@ -13,6 +13,7 @@ requires 'Data::Dump';
 requires 'File::Temp';
 requires 'Pod::Usage';
 requires 'Getopt::Long';
+requires 'Tie::IxHash';
 
 build_requires 'Test::More';
 

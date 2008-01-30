@@ -1,5 +1,18 @@
 Revision history for Perl extension DBICx::AutoDoc.
 
+0.04  Tue Jan 29 21:28:29 EST 2008
+    - Added Tie::IxHash to the list of requirements.  Reported by
+      Anders Nor Berle.
+    - Added documentation for the undocumented internal methods of
+      DBICx::AutoDoc.
+    - Fixed a bug in get_unique_constraints_for.
+    - Made schema_version return 1 if no version is defined.
+    - Corrected the documentation for the templates.
+    - Added missing footer to the main documentation template.
+    - Added unique constraints to the main documentation template.
+    - Factored out the comments into a separate template, for ease
+      of maintenance.
+
 0.03  Tue Nov 20 14:47:01 EST 2007
     - Added a -I option to dbicx-autodoc, so you can document schemas that
       aren't in @INC.

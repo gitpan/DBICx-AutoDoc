@@ -27,4 +27,5 @@ requires:
   Getopt::Long: 0
   Pod::Usage: 0
   Template: 0
-version: 0.03
+  Tie::IxHash: 0
+version: 0.04

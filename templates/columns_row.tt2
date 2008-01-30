@@ -4,11 +4,6 @@
     <td>[% INCLUDE column_name.tt2 %]</td>
     <td>[% INCLUDE column_type.tt2 %]</td>
     <td>[% INCLUDE column_info.tt2 %]</td>
-    [% IF col.comment %]
-        <tr class="[% class %]">
-        <td>&nbsp;</td>
-        <td colspan="2"><div class="comment">[% col.comment %]</div></td>
-        </tr>   
-    [% END %]
+    [% INCLUDE table_comment.tt2 colspan = 2 comment = col.comment %]
 [% END -%]
 [%# $Id$ #%]

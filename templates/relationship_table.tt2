@@ -43,12 +43,7 @@
                 </td>
             [% END %]
             </tr>
-            [% IF comment %]
-                <tr class="[% class %]">
-                <td>&nbsp;</td>
-                <td colspan="3"><div class="comment">[% comment %]</div></td>
-                </tr>
-            [% END %]
+            [% INCLUDE table_comment.tt2 colspan = 3 %]
         [% END %]
     [% END %]
     </table>
