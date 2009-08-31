@@ -12,6 +12,7 @@ inc/Module/Install.pm
 inc/Module/Install/AutoInstall.pm
 inc/Module/Install/Base.pm
 inc/Module/Install/Can.pm
+inc/Module/Install/ExtraTests.pm
 inc/Module/Install/Fetch.pm
 inc/Module/Install/Include.pm
 inc/Module/Install/Makefile.pm
@@ -23,12 +24,10 @@ inc/Module/Install/WriteAll.pm
 lib/DBICx/AutoDoc.pm
 lib/DBICx/AutoDoc/Magic.pm
 Makefile.PL
-MANIFEST
+MANIFEST			This list of files
 META.yml
 README
 t/01app.t
-t/02pod.t
-t/03podcoverage.t
 t/lib/ExampleDB.pm
 t/lib/ExampleDB/Result/Address.pm
 t/lib/ExampleDB/Result/EmailAddress.pm
@@ -56,3 +55,5 @@ templates/table_comment.tt2
 templates/tabs.tt2
 templates/unique_constraints_table.tt2
 update-examples
+xt/author/pod-coverage.t
+xt/author/pod.t

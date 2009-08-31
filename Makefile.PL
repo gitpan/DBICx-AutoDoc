@@ -3,22 +3,18 @@ use inc::Module::Install;
 name 'DBICx-AutoDoc';
 all_from 'lib/DBICx/AutoDoc.pm';
 
-requires 'DBIx::Class';
-requires 'Template';
-requires 'Class::Inspector';
-requires 'Carp';
-requires 'Class::Accessor::Grouped';
-requires 'FindBin';
-requires 'Data::Dump';
-requires 'File::Temp';
-requires 'Pod::Usage';
-requires 'Getopt::Long';
-requires 'Tie::IxHash';
+requires( $_ ) for qw(
+    DBIx::Class Template Class::Inspector Carp Class::Accessor::Grouped FindBin
+    Data::Dump File::Temp Pod::Usage Getopt::Long Tie::IxHash
+);
 
-build_requires 'Test::More';
+test_requires( $_ ) for qw(
+    Test::More
+);
 
 install_script 'dbicx-autodoc';
 install_share 'templates';
 
+extra_tests;
 auto_install;
 WriteAll;
